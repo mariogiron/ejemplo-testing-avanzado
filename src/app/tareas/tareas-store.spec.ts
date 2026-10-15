@@ -76,4 +76,24 @@ describe('TareasStore', () => {
     expect(store.tareas().map((t) => t.hecha)).toEqual([false, true]);
     expect(avisos.mostrar).not.toHaveBeenCalled();
   });
+
+  it('si crear falla, avisa y no añade nada', () => {
+    api.crear.mockReturnValue(throwError(() => new Error('sin red')));
+
+    store.crear('Nueva', 20);
+
+    expect(store.tareas()).toEqual([]);
+    expect(avisos.mostrar).toHaveBeenCalledWith('No se ha podido crear la tarea');
+  });
+
+  it('si completar falla, avisa y la tarea sigue pendiente', () => {
+    api.listar.mockReturnValue(of([tarea({ id: 1 })]));
+    api.completar.mockReturnValue(throwError(() => new Error('sin red')));
+    store.cargar();
+
+    store.completar(1);
+
+    expect(store.tareas()[0].hecha).toBe(false);
+    expect(avisos.mostrar).toHaveBeenCalledWith('No se ha podido completar la tarea');
+  });
 });
