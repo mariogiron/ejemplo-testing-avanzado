@@ -1,59 +1,46 @@
-# Tareas
+# Angular Avanzado · Módulo 8 · Testing desde cero
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.26.
+Una aplicación de **tareas** que empieza recién salida de `ng new`, completa y sin un solo test. Se le configura Jest a mano y se le ponen tests de lo más fácil a lo más difícil: funciones, un pipe, un servicio HTTP, un interceptor, componentes, un store con espías, una página con un store de mentira y el reloj de mentira. Después, la cobertura, un solo comando para Jenkins y la misma batería con Vitest.
 
-## Development server
+## Órdenes
 
-To start a local development server, run:
+```
+node servidores/api.mjs   # la API de prácticas, en http://localhost:3000
+npm start                 # la aplicación, en http://localhost:4200
 
-```bash
-ng serve
+npm test                  # Jest
+npm run test:watch        # Jest vigilando los cambios
+npm run test:tipos        # comprueba los tipos de los tests (Jest no lo hace)
+npm run test:ci           # cobertura con suelo e informe JUnit en informes/junit.xml
+npm run verificar         # formato, tipos, tests y build: lo que hace Jenkins
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Etiquetas
 
-## Code scaffolding
+`git checkout <etiqueta>` deja el código en ese paso. `main` es el final. Después de cambiar de etiqueta, `npm install`.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+| Etiqueta                | Paso                                                        |
+| ----------------------- | ----------------------------------------------------------- |
+| `paso-0-ng-new`         | Lo que genera `ng new`                                      |
+| `paso-1-partida`        | La aplicación, sin tests                                    |
+| `paso-2-jest`           | Jest configurado                                            |
+| `paso-3-primeros-tests` | `resumir` y `filtrarPorTexto`, datos de prueba y tipos      |
+| `paso-4-pipe`           | El pipe `duracion`, con el test por delante                 |
+| `paso-5-api`            | El servicio HTTP, con `HttpTestingController`               |
+| `paso-6-interceptor`    | El interceptor, con una sesión de mentira                   |
+| `paso-7-tarjeta`        | Un componente de presentación                               |
+| `paso-8-resumen`        | Un componente que carga datos                               |
+| `paso-9-store`          | Un servicio que coordina: espías                            |
+| `paso-10-pagina`        | Una página que coordina: un store de mentira                |
+| `paso-11-tiempo`        | El reloj de mentira                                         |
+| `paso-12-cobertura`     | La cobertura, con un suelo                                  |
+| `paso-13-ci`            | `test:ci`, el informe JUnit, `verificar` y el `Jenkinsfile` |
 
-```bash
-ng generate component component-name
-```
+Ramas laterales, que salen de `paso-13-ci`:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+| Etiqueta              | Qué es                                                                       |
+| --------------------- | ---------------------------------------------------------------------------- |
+| `alternativa-vitest`  | Los mismos tests con Vitest y `ng test` (instalado con `npx npm@11 install`) |
+| `ejercicio-1-sesion`  | Solución del ejercicio 1                                                     |
+| `ejercicio-2-errores` | Solución del ejercicio 2                                                     |
+| `ejercicio-3-guard`   | Solución del ejercicio 3                                                     |
