@@ -6,12 +6,12 @@ describe('Avisos', () => {
 
   beforeEach(() => {
     // Un reloj de mentira: el tiempo solo pasa cuando el test lo dice
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     avisos = TestBed.inject(Avisos);
   });
 
   afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('enseña el mensaje', () => {
@@ -23,19 +23,19 @@ describe('Avisos', () => {
   it('lo quita a los tres segundos, y no antes', () => {
     avisos.mostrar('Hola');
 
-    jest.advanceTimersByTime(DURACION_AVISO - 1);
+    vi.advanceTimersByTime(DURACION_AVISO - 1);
     expect(avisos.mensaje()).toBe('Hola');
 
-    jest.advanceTimersByTime(1);
+    vi.advanceTimersByTime(1);
     expect(avisos.mensaje()).toBeNull();
   });
 
   it('un aviso nuevo empieza a contar de cero', () => {
     avisos.mostrar('Primero');
-    jest.advanceTimersByTime(2000);
+    vi.advanceTimersByTime(2000);
 
     avisos.mostrar('Segundo');
-    jest.advanceTimersByTime(2000);
+    vi.advanceTimersByTime(2000);
 
     expect(avisos.mensaje()).toBe('Segundo');
   });

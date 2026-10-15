@@ -13,9 +13,9 @@ function crearStoreFalso() {
     tareas,
     cargando: signal(false),
     resumen: computed(() => resumir(tareas())),
-    cargar: jest.fn(),
-    crear: jest.fn(),
-    completar: jest.fn(),
+    cargar: vi.fn(),
+    crear: vi.fn(),
+    completar: vi.fn(),
   };
 }
 

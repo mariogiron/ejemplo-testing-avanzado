@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import type { Mocked } from 'vitest';
 import { of, Subject, throwError } from 'rxjs';
 import { tarea } from '../../testing/datos';
 import { Avisos } from '../avisos/avisos';
@@ -9,12 +10,12 @@ import { TareasStore } from './tareas-store';
 describe('TareasStore', () => {
   let store: TareasStore;
   /** Espías: funciones de mentira que recuerdan cómo las llamaron y devuelven lo que se les diga. */
-  let api: jest.Mocked<Pick<TareasApi, 'listar' | 'crear' | 'completar'>>;
-  let avisos: jest.Mocked<Pick<Avisos, 'mostrar'>>;
+  let api: Mocked<Pick<TareasApi, 'listar' | 'crear' | 'completar'>>;
+  let avisos: Mocked<Pick<Avisos, 'mostrar'>>;
 
   beforeEach(() => {
-    api = { listar: jest.fn(), crear: jest.fn(), completar: jest.fn() };
-    avisos = { mostrar: jest.fn() };
+    api = { listar: vi.fn(), crear: vi.fn(), completar: vi.fn() };
+    avisos = { mostrar: vi.fn() };
     TestBed.configureTestingModule({
       providers: [
         { provide: TareasApi, useValue: api },

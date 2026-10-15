@@ -33,8 +33,10 @@
     "jest-environment-jsdom": "^30.5.2",
     "jest-junit": "^17.0.0",
     "jest-preset-angular": "^17.0.3",
+    "jsdom": "^29.1.1",
     "prettier": "^3.8.1",
-    "typescript": "~5.9.2"
+    "typescript": "~5.9.2",
+    "vitest": "^4.1.12"
   },
   "jest-junit": {
     "outputDirectory": "informes",
