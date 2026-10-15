@@ -1,6 +1,6 @@
 // El pipeline de la aplicación de tareas. No sabe nada de Angular: ejecuta las mismas órdenes
 // que en local lanza `npm run verificar`, repartidas en etapas.
-// Orientativo: el agente y los pasos junit, publishHTML y archiveArtifacts dependen de cada Jenkins.
+// Orientativo: el agente y los pasos junit y archiveArtifacts dependen de cada Jenkins.
 pipeline {
   agent {
     docker { image 'node:22' }
