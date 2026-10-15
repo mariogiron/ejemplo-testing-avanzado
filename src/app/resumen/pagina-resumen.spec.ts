@@ -23,5 +23,30 @@ describe('PaginaResumen', () => {
   const texto = (html: HTMLElement, selector: string) =>
     html.querySelector(selector)?.textContent?.trim();
 
-  // ✍️ A mano: los tests de PaginaResumen, mirando pagina-resumen.ts.
+  it('mientras espera, dice que está cargando', () => {
+    const fixture = abrir();
+
+    expect(texto(fixture.nativeElement, '.estado')).toBe('Cargando…');
+  });
+
+  it('cuando llegan las tareas, enseña los números', async () => {
+    const fixture = abrir();
+
+    respuesta.next([tarea({ hecha: true }), tarea(), tarea(), tarea()]);
+    respuesta.complete();
+    await fixture.whenStable();
+
+    expect(texto(fixture.nativeElement, '.total')).toBe('4');
+    expect(texto(fixture.nativeElement, '.pendientes')).toBe('3');
+    expect(texto(fixture.nativeElement, '.porcentaje')).toBe('25 %');
+  });
+
+  it('si la API falla, lo dice', async () => {
+    const fixture = abrir();
+
+    respuesta.error(new Error('sin red'));
+    await fixture.whenStable();
+
+    expect(texto(fixture.nativeElement, '.estado')).toBe('No se ha podido cargar el resumen.');
+  });
 });
