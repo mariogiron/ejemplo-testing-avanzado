@@ -1,0 +1,27 @@
+header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 12px 24px;
+  background: #1e3a8a;
+  color: #fff;
+}
+nav {
+  display: flex;
+  gap: 16px;
+  flex: 1;
+}
+nav a {
+  color: #bfdbfe;
+}
+nav a.activo {
+  font-weight: bold;
+}
+.aviso {
+  margin: 0;
+  padding: 8px 24px;
+  background: #fef3c7;
+}
+main {
+  padding: 8px 24px;
+}
