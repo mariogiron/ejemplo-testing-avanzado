@@ -27,5 +27,30 @@ describe('usuarioInterceptor', () => {
 
   afterEach(() => controlador.verify());
 
-  // ✍️ A mano: los tests de usuarioInterceptor, mirando usuario.interceptor.ts.
+  it('añade X-Usuario a las peticiones a /api/', () => {
+    http.get('/api/tareas').subscribe();
+
+    const peticion = controlador.expectOne('/api/tareas');
+
+    expect(peticion.request.headers.get('X-Usuario')).toBe('ana');
+    peticion.flush([]);
+  });
+
+  it('no la añade si no hay usuario', () => {
+    usuario.set(null);
+
+    http.get('/api/tareas').subscribe();
+
+    const peticion = controlador.expectOne('/api/tareas');
+    expect(peticion.request.headers.has('X-Usuario')).toBe(false);
+    peticion.flush([]);
+  });
+
+  it('no la añade fuera de /api/', () => {
+    http.get('https://ejemplo.com/datos.json').subscribe();
+
+    const peticion = controlador.expectOne('https://ejemplo.com/datos.json');
+    expect(peticion.request.headers.has('X-Usuario')).toBe(false);
+    peticion.flush({});
+  });
 });
