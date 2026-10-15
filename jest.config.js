@@ -8,4 +8,11 @@ module.exports = {
   roots: ['<rootDir>/src'],
   // Antes de cada fichero de tests: preparar TestBed
   setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
+  // La cobertura mide todo el código de la aplicación, también lo que ningún test importa
+  collectCoverageFrom: ['src/app/**/*.ts', '!src/app/**/*.spec.ts'],
+  coverageReporters: ['text', 'html'],
+  // El suelo: si baja de aquí, jest --coverage termina con error
+  coverageThreshold: {
+    global: { lines: 80 },
+  },
 };
