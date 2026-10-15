@@ -8,7 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:tipos": "tsc -p tsconfig.spec.json --noEmit"
+    "test:tipos": "tsc -p tsconfig.spec.json --noEmit",
+    "test:ci": "jest --ci --coverage --reporters=default --reporters=jest-junit",
+    "verificar": "prettier --check src && npm run test:tipos && npm run test:ci && ng build"
   },
   "private": true,
   "packageManager": "npm@10.9.4",
@@ -33,5 +35,11 @@
     "jest-preset-angular": "^17.0.3",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2"
+  },
+  "jest-junit": {
+    "outputDirectory": "informes",
+    "outputName": "junit.xml",
+    "classNameTemplate": "{classname}",
+    "titleTemplate": "{title}"
   }
 }
