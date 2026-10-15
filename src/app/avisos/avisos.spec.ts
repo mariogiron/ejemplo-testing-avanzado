@@ -14,5 +14,29 @@ describe('Avisos', () => {
     jest.useRealTimers();
   });
 
-  // ✍️ A mano: los tests de Avisos, mirando avisos.ts.
+  it('enseña el mensaje', () => {
+    avisos.mostrar('Hola');
+
+    expect(avisos.mensaje()).toBe('Hola');
+  });
+
+  it('lo quita a los tres segundos, y no antes', () => {
+    avisos.mostrar('Hola');
+
+    jest.advanceTimersByTime(DURACION_AVISO - 1);
+    expect(avisos.mensaje()).toBe('Hola');
+
+    jest.advanceTimersByTime(1);
+    expect(avisos.mensaje()).toBeNull();
+  });
+
+  it('un aviso nuevo empieza a contar de cero', () => {
+    avisos.mostrar('Primero');
+    jest.advanceTimersByTime(2000);
+
+    avisos.mostrar('Segundo');
+    jest.advanceTimersByTime(2000);
+
+    expect(avisos.mensaje()).toBe('Segundo');
+  });
 });
