@@ -4,8 +4,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({ name: 'duracion' })
 export class DuracionPipe implements PipeTransform {
   transform(minutos: number | null | undefined): string {
-    // ✍️ A mano: hoy hace lo mismo que hacía la plantilla. Primero, los tests en rojo;
-    // después, el código que los pone en verde.
-    return `${minutos} min`;
+    if (minutos == null || !Number.isFinite(minutos) || minutos < 0) {
+      return '—';
+    }
+    const horas = Math.floor(minutos / 60);
+    const resto = minutos % 60;
+    if (horas === 0) {
+      return `${resto} min`;
+    }
+    return resto === 0 ? `${horas} h` : `${horas} h ${resto} min`;
   }
 }

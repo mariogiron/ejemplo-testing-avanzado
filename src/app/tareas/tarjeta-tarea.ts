@@ -1,13 +1,15 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { DuracionPipe } from './duracion.pipe';
 import { Tarea } from './tarea';
 
 /** Una tarea en la lista. No sabe de dónde viene: la recibe y avisa si la completan. */
 @Component({
   selector: 'app-tarjeta-tarea',
+  imports: [DuracionPipe],
   template: `
     <article class="tarjeta" [class.hecha]="tarea().hecha">
       <span class="titulo">{{ tarea().titulo }}</span>
-      <span class="duracion">{{ tarea().minutos }} min</span>
+      <span class="duracion">{{ tarea().minutos | duracion }}</span>
       @if (!tarea().hecha) {
         <button (click)="completar.emit(tarea().id)">Hecha</button>
       }
