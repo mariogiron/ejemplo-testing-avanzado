@@ -6,6 +6,8 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
+import { descargar } from '../compartido/descargar';
+import { aCsv } from './csv';
 import { filtrarPorTexto } from './resumen';
 import { TareasStore } from './tareas-store';
 import { TarjetaTarea } from './tarjeta-tarea';
@@ -28,7 +30,10 @@ import { TarjetaTarea } from './tarjeta-tarea';
       <button type="submit">Añadir</button>
     </form>
 
-    <p><input #filtro class="filtro" placeholder="Buscar" (input)="texto.set(filtro.value)" /></p>
+    <p>
+      <input #filtro class="filtro" placeholder="Buscar" (input)="texto.set(filtro.value)" />
+      <button type="button" class="exportar" (click)="exportar()">Exportar</button>
+    </p>
 
     @if (store.cargando()) {
       <p>Cargando…</p>
@@ -50,6 +55,14 @@ export class PaginaTareas implements OnInit {
 
   ngOnInit() {
     this.store.cargar();
+  }
+
+  /** Descarga en CSV las tareas que se ven, si el usuario lo confirma. */
+  protected exportar() {
+    const tareas = this.visibles();
+    if (confirm(`¿Descargar ${tareas.length} tareas?`)) {
+      descargar(aCsv(tareas), 'tareas.csv', 'text/csv');
+    }
   }
 
   protected crear(evento: Event, titulo: HTMLInputElement, minutos: HTMLInputElement) {

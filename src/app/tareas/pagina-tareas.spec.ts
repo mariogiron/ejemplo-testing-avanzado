@@ -1,10 +1,14 @@
 import { computed, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { tarea } from '../../testing/datos';
+import { descargar } from '../compartido/descargar';
 import { PaginaTareas } from './pagina-tareas';
 import { resumir } from './resumen';
 import { Tarea } from './tarea';
 import { TareasStore } from './tareas-store';
+
+// jsdom no sabe descargar ficheros: el módulo entero se sustituye por funciones espía
+jest.mock('../compartido/descargar');
 
 /** Un store de mentira: signals que el test controla y métodos que solo recuerdan las llamadas. */
 function crearStoreFalso() {
@@ -84,5 +88,30 @@ describe('PaginaTareas', () => {
     await fixture.whenStable();
 
     expect(html.querySelector('.vacio')?.textContent).toBe('No hay tareas.');
+  });
+
+  describe('exportar', () => {
+    const exportar = () => html.querySelector<HTMLButtonElement>('.exportar')!.click();
+
+    it('si el usuario confirma, descarga en CSV las tareas que se ven', () => {
+      const confirmar = jest.spyOn(window, 'confirm').mockReturnValue(true);
+
+      exportar();
+
+      expect(confirmar).toHaveBeenCalledWith('¿Descargar 2 tareas?');
+      expect(descargar).toHaveBeenCalledWith(
+        'titulo;minutos;hecha\nConfigurar Jenkins;30;sí\nRevisar los ejercicios;30;no',
+        'tareas.csv',
+        'text/csv',
+      );
+    });
+
+    it('si el usuario cancela, no descarga nada', () => {
+      jest.spyOn(window, 'confirm').mockReturnValue(false);
+
+      exportar();
+
+      expect(descargar).not.toHaveBeenCalled();
+    });
   });
 });
