@@ -1,6 +1,20 @@
-# Angular Avanzado · Módulo 8 · Testing desde cero
+# Angular Avanzado · Módulo 8 · Testing
 
-Una aplicación de **tareas** que empieza recién salida de `ng new`, completa y sin un solo test. Se le configura Jest a mano y se le ponen tests de lo más fácil a lo más difícil: funciones, un pipe, un servicio HTTP, un interceptor, componentes, un store con espías, una página con un store de mentira y el reloj de mentira. Después, la cobertura, un solo comando para Jenkins y la misma batería con Vitest.
+Una aplicación de **tareas** que empieza recién salida de `ng new`, completa y sin un solo test. Se le configura Jest a mano y se le ponen tests de lo más fácil a lo más difícil: funciones, un pipe, un servicio HTTP, un interceptor, componentes, un store con espías, una página con un store de mentira y el reloj de mentira. Después, la cobertura, un solo comando para Jenkins y los mismos tests con Vitest.
+
+## Antes de empezar
+
+Hace falta Node.js 22 (vale la 20.19 o posterior, la 22.13 o posterior, o la 24).
+
+```
+git clone <dirección del repositorio>
+cd tareas
+npm ci
+npx ng analytics disable --global
+npm test
+```
+
+`npm test` tiene que terminar con `Tests: 48 passed, 48 total`.
 
 ## Órdenes
 
@@ -17,13 +31,13 @@ npm run verificar         # formato, tipos, tests y build: lo que hace Jenkins
 
 ## Etiquetas
 
-`git checkout <etiqueta>` deja el código en ese paso. `main` es el final. Después de cambiar de etiqueta, `npm install`.
+`git checkout -f <etiqueta>` deja el código en ese paso y descarta lo que se haya tocado para probar. `main` es el final, con este README. Todas las etiquetas usan las mismas dependencias que `main`: no hace falta volver a instalar nada al cambiar de una a otra, salvo con `alternativa-vitest` (abajo).
 
 | Etiqueta                | Paso                                                        |
 | ----------------------- | ----------------------------------------------------------- |
 | `paso-0-ng-new`         | Lo que genera `ng new`                                      |
 | `paso-1-partida`        | La aplicación, sin tests                                    |
-| `paso-2-jest`           | Jest configurado                                            |
+| `paso-2-jest`           | Jest configurado (todavía sin tests: `npm test` falla)      |
 | `paso-3-primeros-tests` | `resumir` y `filtrarPorTexto`, datos de prueba y tipos      |
 | `paso-4-pipe`           | El pipe `duracion`, con el test por delante                 |
 | `paso-5-api`            | El servicio HTTP, con `HttpTestingController`               |
@@ -38,9 +52,10 @@ npm run verificar         # formato, tipos, tests y build: lo que hace Jenkins
 
 Ramas laterales, que salen de `paso-13-ci`:
 
-| Etiqueta              | Qué es                                                                       |
-| --------------------- | ---------------------------------------------------------------------------- |
-| `alternativa-vitest`  | Los mismos tests con Vitest y `ng test` (instalado con `npx npm@11 install`) |
-| `ejercicio-1-sesion`  | Solución del ejercicio 1                                                     |
-| `ejercicio-2-errores` | Solución del ejercicio 2                                                     |
-| `ejercicio-3-guard`   | Solución del ejercicio 3                                                     |
+| Etiqueta              | Qué es                                                                   |
+| --------------------- | ------------------------------------------------------------------------ |
+| `ejercicio-1-sesion`  | Solución del ejercicio 1                                                 |
+| `ejercicio-2-errores` | Solución del ejercicio 2                                                 |
+| `ejercicio-3-guard`   | Solución del ejercicio 3                                                 |
+| `ampliar-espias`      | Exportar a CSV: `jest.spyOn`, `jest.mock`, `clearMocks` y `restoreMocks` |
+| `alternativa-vitest`  | Los mismos tests con Vitest y `ng test`. Al entrar y al salir, `npm ci`  |
